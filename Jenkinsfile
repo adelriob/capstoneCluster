@@ -3,10 +3,10 @@ pipeline {
     stages {
         stage('Create Kubernetes Cluster') {
             steps {
-                withAWS(region:'us-east-2', credentials:'AKIAYZZNXNNA6PCTBTOL') {
+                withAWS(region:'us-east-2', credentials:'aws-static') {
                     sh '''
                         eksctl create cluster \
-                        --name capstoneCluster \
+                        --name capstonecluster \
                         --version 1.13 \
                         --nodegroup-name standard-workers \
                         --node-type t2.small \
@@ -24,9 +24,9 @@ pipeline {
         }
         stage('Create or update configuration file for Cluster') {
             steps {
-                withAWS(region:'us-east-2', credentials:'AKIAYZZNXNNA6PCTBTOL') {
+                withAWS(region:'us-east-2', credentials:'aws-static') {
                     sh '''
-                        aws eks --region us-east-2 update-kubeconfig --name capstoneCluster
+                        aws eks --region us-east-2 update-kubeconfig --name capstonecluster
                     '''
                 }
             }
